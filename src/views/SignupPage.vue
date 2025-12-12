@@ -1,72 +1,53 @@
 <template>
     <div>
-      <div v-if="errors.length" id="error-block"> <!-- v-if only shows when there are errors-->
-        <h3>
-          Password requirements
-        </h3>
-        <ul> 
-      <li v-for="(err, index) in errors" :key="index" class="error-message"> <!-- index on lihtsalt sellepärast et vuele meeldib kui on mingi key-->
-        {{ err }}
-      </li>
-        </ul>
-        </div>
       <h2>Create Account</h2>
   
       <form class="signup-form">
-        <input type="text" placeholder="Username" />
-        <input type="email" placeholder="Email" />
+        <input type="email" placeholder="Email" required v-model="email"/>
         <input type="password" v-model="password" placeholder="Password" />
   
-        <button type="button" @click="login">Sign Up</button>
+        <button type="button" @click="SignUp">Sign Up</button>
       </form>
     </div>
   </template>
 
 <script>
   export default {
-    data() {
-      return {
-        password: '',
-        errors: []
-      }
-    },
+    name: "SignUp",
+    data: function() {
+    return {
+   email: '',
+   password: '',
+  }
+  },
     methods: {
-      login() {
-        this.errors = [];
-        console.log("pasword is: ", this.password)
-
-        // iterate over password and check for lowercase letters
-        let smallL = 0;
-        this.password.split("").forEach(element => {
-          if (element.toUpperCase() != element){
-            smallL ++;
-          } 
-
-        })
-        if (this.password.length < 8 || this.password.length > 15) {
-          console.log("suurem kui 8 aga väiksem kui 15")
-          this.errors.push("must include at least 8 chars, but less than 15 chars")
-        }
-        if (!/[A-Z]/.test(this.password)){
-            this.errors.push("must include at least 1 uppercase letter");
-          }
-        if(smallL < 2){
-          console.log("puudu 2 väikest tähte")
-          this.errors.push("must include at least 2 lowercase letters")
-        }
-        if (!/\d/.test(this.password)){ // digit check
-          console.log("peab sisaldama numbrit")
-          this.errors.push("must include a numeric value")
-        }
-        if (this.password == "" || !/[A-Z]/.test(this.password[0])){
-            console.log("peab algama suure tähega")
-            this.errors.push("must begin with uppercase letter")
-          }
-        if (!/_/.test(this.password)){
-          console.log("peab olema alakriips")
-          this.errors.push("must include char \"_\" ")
-        }
-      }
+      
+      //auth
+      SignUp() {
+      var data = {
+        email: this.email,
+        password: this.password
+      };
+      // using Fetch - post method - send an HTTP post request to the specified URI with the defined body
+      fetch("http://localhost:3000/auth/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+          credentials: 'include', //  Don't forget to specify this if you need cookies
+          body: JSON.stringify(data),
+      })
+      .then((response) => response.json())
+      .then((data) => {
+      console.log(data);
+      this.$router.push("/");
+      //location.assign("/");
+      })
+      .catch((e) => {
+        console.log(e);
+        console.log("error");
+      });
+    },
     }
   }
 </script>
@@ -84,6 +65,32 @@
 
 .error-message {
   color: red;
+}
+
+.signup-form {
+  max-width: 420px;
+  margin: 30px auto;
+  background: rgb(167, 154, 154);
+  text-align: left;
+  padding: 40px;
+  border-radius: 10px;
+}
+
+.signup-form input {
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #aaa;
+  font-size: 16px;
+}
+
+.signup-form button {
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  background: #333;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
 }
 
 </style>
