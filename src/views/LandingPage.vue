@@ -1,7 +1,6 @@
 <template>
-
   <div id="logoutDiv">
-    <button id="logoutButton" @click="Logout">Logout</button>
+    <button id="logoutButton" @click="Logout" class="userAuthBtn">Logout</button>
   </div>
   <div>
     <PostCard
@@ -75,7 +74,7 @@ export default {
   #logoutButton{
     margin-left: auto;
     margin-right: auto;
-    margin-top: 3%;
     margin-bottom: 3%;
+    width: 13%;
   }
 </style>

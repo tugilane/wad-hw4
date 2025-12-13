@@ -122,3 +122,50 @@ a:hover {
   background-color: #8f8f8f;
 }
 
+/* start of signup/login pages CSS */ 
+
+.error-block {
+  width: 25%;
+  margin-right: auto;
+  margin-left: auto;
+  background-color: white;
+  border-radius: 5%;
+  padding: 3%;
+}
+
+.error-message {
+  color: red;
+}
+
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 20px;
+  width: 40%;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 10%;
+  background-color:aliceblue;
+  border-radius: 50px
+}
+
+.signup-form input {
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #aaa;
+  font-size: 16px;
+}
+
+.userAuthBtn { /* this also for landing page button */
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  background: #333;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* end of signup/login pages css */ 
+
