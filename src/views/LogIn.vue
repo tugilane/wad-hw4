@@ -24,7 +24,7 @@ export default {
     return {
       email: '',
       password: '',
-            error: "",
+      error: "",
     }
   },
   methods: {
@@ -45,9 +45,9 @@ export default {
         credentials: 'include', //  Don't forget to specify this if you need cookies
         body: JSON.stringify(data),
       })
-      .then(async (response) => {
+        .then(async (response) => {
           const data = await response.json().catch(() => ({}));
-      if (!response.ok) {
+          if (!response.ok) {
             this.error = data.error;
             return;
           }
