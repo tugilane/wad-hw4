@@ -4,13 +4,13 @@
     <div v-if="error" class="error-block">
       <p class="error-message">{{ error }}</p>
     </div>
-        <form class="signup-form">
+    <form class="signup-form">
       <input type="email" placeholder="Email" required v-model="email" />
       <input type="password" v-model="password" placeholder="Password" />
 
-      <button id="signUpBtn" type="button" @click="SignUp">Sign Up</button>
+      <button id="signUpBtn" class="userAuthBtn" type="button" @click="SignUp">Sign Up</button>
     </form>
-    
+
   </div>
 </template>
 
@@ -64,8 +64,7 @@ export default {
 </script>
 
 <style>
-
-#signUpBtn{
+#signUpBtn {
   width: 40%;
 }
 </style>

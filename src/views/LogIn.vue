@@ -1,32 +1,32 @@
 <template>
   <div>
     <h2>Log in</h2>
-        <form class="signup-form">
+    <form class="signup-form">
       <input type="email" placeholder="Email" required v-model="email" />
       <input type="password" v-model="password" placeholder="Password" />
       <div>
-      <button id="loginBtn" @click="LogIn" class="center">Login</button>
-      <button id="signUPfLoginBtn" @click='this.$router.push("/signup")' class="center">Signup</button>
+        <button id="loginBtn" @click="LogIn" class="userAuthBtn">Login</button>
+        <button id="signUPfLoginBtn" class="userAuthBtn" @click='this.$router.push("/signup")'>Signup</button>
       </div>
     </form>
-    
+
   </div>
 </template>
 
 <script>
 export default {
-name: "LogIn", 
+  name: "LogIn",
 
-data: function() {
+  data: function () {
     return {
-   email: '',
-   password: '',
-  }
+      email: '',
+      password: '',
+    }
   },
   methods: {
 
 
-LogIn() {
+    LogIn() {
       var data = {
         email: this.email,
         password: this.password
@@ -37,29 +37,28 @@ LogIn() {
         headers: {
           "Content-Type": "application/json",
         },
-          credentials: 'include', //  Don't forget to specify this if you need cookies
-          body: JSON.stringify(data),
+        credentials: 'include', //  Don't forget to specify this if you need cookies
+        body: JSON.stringify(data),
       })
-      .then((response) => response.json())
-      .then((data) => {
-      console.log(data);
-      //this.$router.push("/");
-      location.assign("/");
-      })
-      .catch((e) => {
-        console.log(e);
-        console.log("error");
-      });
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          //this.$router.push("/");
+          location.assign("/");
+        })
+        .catch((e) => {
+          console.log(e);
+          console.log("error");
+        });
     },
-  }, 
-  }
+  },
+}
 
 </script>
 
 <style>
-
 #loginBtn {
-    width: 40%;
+  width: 40%;
 
 }
 
@@ -67,6 +66,4 @@ LogIn() {
   margin-left: 20%;
   width: 40%;
 }
-
-
 </style>
