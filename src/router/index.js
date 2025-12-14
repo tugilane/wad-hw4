@@ -8,27 +8,32 @@ import PostPage from "../views/PostPage.vue";
 import AddPostPage from "../views/AddPostPage.vue";
 
 const routes = [
-  {
-        path: "/",
-        name: "home",
-        component: LandingPage,
-        beforeEnter: async(to, from, next) => {
-            let authResult = await auth.authenticated();
-            if (!authResult) {
-                next('/login')
-            } else {
-                next();
-            }
-        }
-    },
+  
   { path: '/signup', component: SignupPage },
   {path: "/login",component: LogIn,},
   { path: '/contact', component: ContactUsPage },
-  { path: "/posts/new", component: AddPostPage },
-  { path: "/posts/:id", component: PostPage }
+  { path: "/posts/new", component: AddPostPage, meta: { requiresAuth: true }},
+  { path: "/", component: LandingPage, meta: { requiresAuth: true }},
+  { path: "/posts/:id", component: PostPage, meta: { requiresAuth: true }},
+  { path: "/posts/", component: PostPage, meta: { requiresAuth: true }}
 ]
 
-export default createRouter({
+const router = createRouter({
   history: createWebHistory(),
   routes
-})
+});
+
+router.beforeEach(async (to, from, next) => {
+  if (!to.meta.requiresAuth) return next();
+
+  try {
+    const ok = await auth.authenticated();
+    if (!ok) return next("/login");
+    next();
+  } catch (err) {
+    next("/login");
+  }
+});
+
+
+export default router;
