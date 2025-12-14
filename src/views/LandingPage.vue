@@ -15,9 +15,13 @@
   </div>
 
   <div class="bottomButtons">
-    <button @click="$router.push('/posts/new')" class="homePageButton">Add post</button>
+    <button @click="$router.push('/posts/new')" class="homePageButton">
+      Add post
+    </button>
 
-    <button @click="deleteAll" class="homePageButton">Delete all</button>
+    <button @click="deleteAll" class="homePageButton">
+      Delete all
+    </button>
   </div>
 </template>
 
@@ -27,35 +31,56 @@ import PostCard from "../components/PostCard.vue";
 export default {
   name: "LandingPage",
   components: { PostCard },
+
   data() {
     return {
       posts: []
     };
   },
+
   methods: {
-    async loadPosts() {
-      const res = await fetch("http://localhost:3000/api/posts", {
+    loadPosts() {
+      fetch("http://localhost:3000/api/posts", {
         credentials: "include"
-      });
-      this.posts = await res.json();
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          this.posts = data;
+        })
+        .catch((err) => {
+          console.log("error loading posts", err);
+        });
     },
+
     goToPost(id) {
       this.$router.push(`/posts/${id}`);
     },
-    async deleteAll() {
-      await fetch("http://localhost:3000/api/posts", {
+
+    deleteAll() {
+      fetch("http://localhost:3000/api/posts", {
         method: "DELETE",
         credentials: "include"
-      });
-      await this.loadPosts();
+      })
+        .then(() => this.loadPosts())
+        .catch((err) => {
+          console.log("error deleting all posts", err);
+        });
     },
-    async Logout() {
-      await fetch("http://localhost:3000/auth/logout", {
+
+    Logout() {
+      fetch("http://localhost:3000/auth/logout", {
         credentials: "include"
-      });
-      this.$router.push("/login");
+      })
+        .then(() => {
+          this.$router.push("/login");
+        })
+        .catch((e) => {
+          console.log(e);
+          console.log("error logout");
+        });
     }
   },
+
   mounted() {
     this.loadPosts();
   }
@@ -69,7 +94,7 @@ export default {
   margin-bottom: 20px;
 }
 
-.homePageButton{
+.homePageButton {
   font-size: 20px;
   padding: 5px 10px;
   border: none;
@@ -79,7 +104,7 @@ export default {
   transition: all 0.2s;
 }
 
-.homePageButton:hover{
+.homePageButton:hover {
   background-color: #9b9b9b;
 }
 
@@ -87,8 +112,9 @@ export default {
   cursor: pointer;
 }
 
-.bottomButtons{
+.bottomButtons {
   display: flex;
   justify-content: space-evenly;
+  margin-top: 20px;
 }
 </style>
