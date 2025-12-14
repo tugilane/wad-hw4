@@ -8,8 +8,8 @@
       <input type="email" placeholder="Email" required v-model="email" />
       <input type="password" v-model="password" placeholder="Password" />
       <div>
-        <button id="loginBtn" @click="LogIn" class="userAuthBtn">Login</button>
-        <button id="signUPfLoginBtn" class="userAuthBtn" @click='this.$router.push("/signup")'>Signup</button>
+        <button id="loginBtn" type="button" @click="LogIn" class="userAuthBtn">Login</button>
+        <button id="signUPfLoginBtn" type="button" class="userAuthBtn" @click='this.$router.push("/signup")'>Signup</button>
       </div>
     </form>
 

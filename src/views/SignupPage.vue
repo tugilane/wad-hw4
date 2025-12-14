@@ -43,8 +43,7 @@ export default {
         body: JSON.stringify(data),
       })
         .then(async (response) => {
-          const data = await response.json();
-
+          const data = await response.json().catch(() => ({}));
           if (!response.ok) {
             this.error = data.error;
             return;
